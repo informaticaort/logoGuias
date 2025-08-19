@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Photopea - Crear Logo de Equipo</title>
+    <meta name="description" content="Guía completa para crear tu logo de equipo usando Photopea. Incluye herramientas interactivas y seguimiento de progreso.">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Guía Photopea para Crear tu Logo de Equipo">
+    <meta property="og:description" content="Herramientas interactivas para diseñar logos usando Photopea">
+    <meta property="og:type" content="website">
+    
+    <!-- Favicon SVG -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23157f1f'><path d='M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z'/><path d='M12 8c-1.1 0-2 .9-2 2v2c0 .55-.45 1-1 1s-1-.45-1-1v-2c0-2.21 1.79-4 4-4s4 1.79 4 4v2c0 .55-.45 1-1 1s-1-.45-1-1v-2c0-1.1-.9-2-2-2z' fill='white'/></svg>">
+
+    <style>
+        /* Updated color palette to use subtle green tones from Coolors */
+        :root {
+            --bg-primary: #1d263b;
+            --bg-secondary: #5c6784;
+            --bg-card: #ffffff;
+            --text-primary: #1d263b;
+            --text-secondary: #157f1f;
+            --text-muted: #5c6784;
+            --border: #a0eade;
+            --accent: #4cb963;
+            --accent-hover: #157f1f;
+            --accent-light: #a0eade;
+            --success: #4cb963;
+            --shadow: 0 4px 6px -1px rgb(21 127 31 / 0.1), 0 2px 4px -2px rgb(21 127 31 / 0.1);
+            --shadow-lg: 0 20px 25px -5px rgb(21 127 31 / 0.1), 0 8px 10px -6px rgb(21 127 31 / 0.1);
+            --gradient-primary: linear-gradient(135deg, #4cb963 0%, #a0eade 100%);
+            --gradient-accent: linear-gradient(135deg, #a0eade 0%, #5c6784 100%);
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f1419;
+            --bg-secondary: #1d263b;
+            --bg-card: #1d263b;
+            --text-primary: #a0eade;
+            --text-secondary: #4cb963;
+            --text-muted: #5c6784;
+            --border: #5c6784;
+            --accent: #4cb963;
+            --accent-hover: #157f1f;
+            --accent-light: #a0eade;
+            --success: #4cb963;
+            --gradient-primary: linear-gradient(135deg, #4cb963 0%, #a0eade 100%);
+            --gradient-accent: linear-gradient(135deg, #a0eade 0%, #5c6784 100%);
+        }
+
+        /* Subtle animations and modern styling */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Modern header with subtle gradient */
+        header {
+            background: var(--gradient-primary);
+            padding: 2rem 0;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            animation: pulse 3s infinite;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .header-text h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header-text p {
+            margin: 0.5rem 0 0 0;
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* Improved theme toggle button */
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .progress-section {
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 0.75rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4cb963, #a0eade);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .progress-text {
+            color: white;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        /* Enhanced card styling with subtle shadows */
+        .card {
+            background: var(--bg-card);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .step-card {
+            position: relative;
+            padding-left: 4rem;
+        }
+
+        .step-number {
+            position: absolute;
+            left: 1rem;
+            top: 1.5rem;
+            width: 2.5rem;
+            height: 2.5rem;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .step-title {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        /* Improved checklist styling */
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .checklist-item:hover {
+            background: var(--accent-light);
+            background-opacity: 0.1;
+        }
+
+        .checklist-item.completed {
+            background: var(--accent-light);
+            background-opacity: 0.2;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            width: 1.25rem;
+            height: 1.25rem;
+            accent-color: var(--accent);
+            margin-top: 0.125rem;
+        }
+
+        .checklist-item label {
+            flex: 1;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        /* Enhanced accordion styling */
+        .accordion {
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-header {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            background: var(--accent-light);
+            background-opacity: 0.1;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background: var(--accent-light);
+            background-opacity: 0.2;
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .accordion.open .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .accordion.open .accordion-content {
+            padding: 1.5rem;
+            max-height: 500px;
+        }
+
+        /* Button improvements */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: white;
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            fill: currentColor;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        /* Success message styling */
+        .success-message {
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--success);
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .success-message.show {
+            display: flex;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .header-text h1 {
+                font-size: 2rem;
+            }
+            
+            .step-card {
+                padding-left: 1rem;
+            }
+            
+            .step-number {
+                position: relative;
+                left: 0;
+                top: 0;
+                margin-bottom: 1rem;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+            
+            .theme-toggle {
+                display: none;
+            }
+            
+            .card {
+                break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ccc;
+            }
+        }
+
+        /* Accessibility */
+        .keyboard-navigation *:focus {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="header-top">
+                    <div class="header-text">
+                        <h1>Guía Photopea</h1>
+                        <p>Diseñá tu logo de equipo paso a paso</p>
+                    </div>
+                    <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                        </svg>
+                        <span id="themeText">Modo oscuro</span>
+                    </button>
+                </div>
+                
+                <div class="progress-section">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="progress-text" id="progressText">Progreso: 0%</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="card">
+                <h2>GUÍA RÁPIDA PARA DISEÑAR TU LOGO EN PHOTOPEA</h2>
+                
+                <div class="accordion">
+                    <button class="accordion-header" aria-expanded="false">
+                        ¿Para qué sirve esta parte?
+                        <svg class="icon accordion-icon" viewBox="0 0 24 24">
+                            <path d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="accordion-content">
+                        <p>Cada grupo va a crear su logo de equipo, que los va a representar durante toda la misión. Va a aparecer en sus documentos, informes y resultados. ¡Diseñalo con creatividad e identidad!</p>
+                    </div>
+                </div>
+
+                <div class="accordion">
+                    <button class="accordion-header" aria-expanded="false">
+                        ¿Qué es Photopea?
+                        <svg class="icon accordion-icon" viewBox="0 0 24 24">
+                            <path d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="accordion-content">
+                        <p>Photopea es un editor online de imágenes, similar a Photoshop, gratuito y sin necesidad de instalar nada.</p>
+                        <p>👉 Entrá a: <a href="https://www.photopea.com" target="_blank" rel="noopener">https://www.photopea.com</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card step-card">
+                <div class="step-number">1</div>
+                <h3 class="step-title">Configuración inicial</h3>
+                <ul class="checklist">
+                    <li class="checklist-item">
+                        <input type="checkbox" id="photopea-1" data-step="photopea">
+                        <label for="photopea-1">Abrí Photopea → Clickeá en "Start using Photopea"</label>
+                    </li>
+                    <li class="checklist-item">
+                        <input type="checkbox" id="photopea-2" data-step="photopea">
+                        <label for="photopea-2">Hacé clic en "Proyecto Nuevo"</label>
+                    </li>
+                    <li class="checklist-item">
+                        <input type="checkbox" id="photopea-3" data-step="photopea">
+                        <label for="photopea-3">Nombre: Logo Equipo + nombre del grupo</label>
+                    </li>
+                    <li class="checklist-item">
+                        <input type="checkbox" id="photopea-4" data-step="photopea">
+                        <label for="photopea-4">Tamaño recomendado: 800x800 px</label>
+                    </li>
+                    <li class="checklist-item">
+                        <input type="checkbox" id="photopea-5" data-step="photopea">
+                        <label for="photopea-5">Fondo: blanco o transparente</label>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card step-card">
+                <div class="step-number">2</div>
+                <h3 class="step-title">Herramientas principales</h3>
+                <ul class="checklist">
+                    <li class="checklist-item">
+                        <input type="checkbox" id="photopea-6" data-step="photopea">
+                        <label for="photopea-6">Texto (T) para poner el nombre del grupo</label>
+                    </li>
+                    <li class="checklist-item">
+                        <input type="checkbox" id="photopea-7" data-step="photopea">
+                        <label for="photopea-7">Formas (U) para círculos, escudos, rectángulos, etc.</label>
+                    </li>
+                    <li class="checklist-item">
+                        <input type="checkbox" id="photopea-8" data-step="photopea">
+                        <label for="photopea-8">Pincel (B) si querés dibujar algo propio</label>
+                    </li>
+                    <li class="checklist-item">
+                        <input type="checkbox" id="photopea-9" data-step="photopea">
+                        <label for="photopea-9">Podés usar imágenes externas: Archivo > Colocar elemento incrustado</label>
+                    </li>
+                </ul>
+                
+                <div class="accordion">
+                    <button class="accordion-header" aria-expanded="false">
+                        Tip: Tabletas Wacom disponibles
+                        <svg class="icon accordion-icon" viewBox="0 0 24 24">
+                            <path d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="accordion-content">
+                        <p>Tenemos Wacoms disponibles para que puedas crear tus diseños dibujando. Te recomendamos usar el pincel y activar la presión de lápiz para mejores resultados.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card step-card">
+                <div class="step-number">3</div>
+                <h3 class="step-title">Diseño y efectos</h3>
+                <ul class="checklist">
+                    <li class="checklist-item">
+                        <input type="checkbox" id="photopea-10" data-step="photopea">
+                        <label for="photopea-10">Jugá con los colores, sombras y estilos de capa (clic derecho sobre la capa > Opciones de fusión)</label>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card step-card">
+                <div class="step-number">4</div>
+                <h3 class="step-title">Exportar tu logo</h3>
+                <ul class="checklist">
+                    <li class="checklist-item">
+                        <input type="checkbox" id="photopea-11" data-step="photopea">
+                        <label for="photopea-11">Exportar: Archivo > Exportar como > PNG</label>
+                    </li>
+                    <li class="checklist-item">
+                        <input type="checkbox" id="photopea-12" data-step="photopea">
+                        <label for="photopea-12">Guardalo en el escritorio. Lo van a necesitar más adelante.</label>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>TIPS DE DISEÑO</h3>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li style="margin-bottom: 0.5rem;">✅ Usá pocos colores, pero bien elegidos</li>
+                    <li style="margin-bottom: 0.5rem;">✅ Asegurate de que el texto se lea bien</li>
+                    <li style="margin-bottom: 0.5rem;">✅ Probá que se vea bien en chico y en grande</li>
+                    <li style="margin-bottom: 0.5rem;">✅ Pensá un símbolo que represente su idea o estilo</li>
+                </ul>
+            </div>
+
+            <!-- Navigation -->
+            <div class="card" style="text-align: center;">
+                <h3>¿Preferís usar IA?</h3>
+                <p>Si querés generar tu logo con inteligencia artificial, probá nuestra guía de prompts:</p>
+                <a href="ia.html" class="btn btn-primary">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M9.5 2A1.5 1.5 0 008 3.5v1A1.5 1.5 0 009.5 6h1A1.5 1.5 0 0012 4.5v-1A1.5 1.5 0 0010.5 2h-1z"/>
+                    </svg>
+                    Ir a guía de IA
+                </a>
+            </div>
+
+            <!-- Export Section -->
+            <div class="card">
+                <h3>📄 Exportar guía</h3>
+                <p>Descargá esta guía como PDF para tenerla siempre disponible:</p>
+                <button class="btn btn-primary" onclick="window.print()">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/>
+                    </svg>
+                    Descargar guía PDF
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <footer style="background: var(--bg-secondary); padding: 2rem 0; margin-top: 3rem; border-top: 1px solid var(--border);">
+        <div class="container">
+            <div style="text-align: center; color: var(--text-muted);">
+                <p>Guía interactiva para equipos de escape room • Uso educativo</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        
+        // Theme management
+        const themeToggle = document.getElementById('themeToggle');
+        const themeText = document.getElementById('themeText');
+        const html = document.documentElement;
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        html.setAttribute('data-theme', savedTheme);
+        updateThemeText(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeText(newTheme);
+        });
+
+        function updateThemeText(theme) {
+            themeText.textContent = theme === 'dark' ? 'Modo claro' : 'Modo oscuro';
+        }
+
+        // Accordion management
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const accordion = header.parentElement;
+                const isOpen = accordion.classList.contains('open');
+                
+                accordion.classList.toggle('open');
+                header.setAttribute('aria-expanded', !isOpen);
+            });
+        });
+
+        // Checklist management
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            const saved = localStorage.getItem(checkbox.id);
+            if (saved === 'true') {
+                checkbox.checked = true;
+                checkbox.parentElement.classList.add('completed');
+            }
+
+            checkbox.addEventListener('change', () => {
+                localStorage.setItem(checkbox.id, checkbox.checked);
+                checkbox.parentElement.classList.toggle('completed', checkbox.checked);
+                updateProgress();
+            });
+        });
+
+        // Progress tracking
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const checkedBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            
+            const progress = checkboxes.length > 0 ? (checkedBoxes.length / checkboxes.length) * 100 : 0;
+            
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressText').textContent = `Progreso: ${Math.round(progress)}%`;
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                document.body.classList.add('keyboard-navigation');
+            }
+        });
+
+        document.addEventListener('mousedown', () => {
+            document.body.classList.remove('keyboard-navigation');
+        });
+
+        // Initialize progress on page load
+        updateProgress();
+    </script>
+</body>
+</html>

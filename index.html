@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Creación de Logos - Escape Room</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-dark: #157f1f;
+            --primary-medium: #4cb963;
+            --accent-mint: #a0eade;
+            --neutral-blue: #5c6784;
+            --dark-navy: #1d263b;
+            --white: #ffffff;
+            --light-gray: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--light-gray) 0%, #e8f5e8 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .header {
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--dark-navy);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: var(--neutral-blue);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .guides-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .guide-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 32px rgba(21, 127, 31, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .guide-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-dark), var(--primary-medium), var(--accent-mint));
+        }
+
+        .guide-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 48px rgba(21, 127, 31, 0.15);
+            border-color: var(--primary-medium);
+        }
+
+        .guide-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--primary-medium), var(--accent-mint));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--white);
+            font-weight: bold;
+        }
+
+        .guide-card h2 {
+            font-size: 1.8rem;
+            color: var(--dark-navy);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .guide-card p {
+            color: var(--neutral-blue);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .features {
+            list-style: none;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .features li {
+            color: var(--neutral-blue);
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.9rem;
+        }
+
+        .features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary-medium);
+            font-weight: bold;
+        }
+
+        .guide-button {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-medium));
+            color: var(--white);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .guide-button:hover {
+            background: linear-gradient(135deg, var(--primary-medium), var(--accent-mint));
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(21, 127, 31, 0.3);
+        }
+
+        .footer {
+            margin-top: 3rem;
+            color: var(--neutral-blue);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .guides-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .guide-card {
+                padding: 2rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎨 Guía de Creación de Logos</h1>
+            <p>Elige tu método preferido para crear el logo perfecto para tu equipo de escape room</p>
+        </div>
+
+        <div class="guides-container">
+            <div class="guide-card">
+                <div class="guide-icon">🤖</div>
+                <h2>Generación con IA</h2>
+                <p>Crea logos únicos usando inteligencia artificial con prompts personalizados y herramientas avanzadas.</p>
+                <ul class="features">
+                    <li>Generador de prompts interactivo</li>
+                    <li>Ejemplos de prompts efectivos</li>
+                    <li>Herramientas de IA recomendadas</li>
+                    <li>Tips para mejores resultados</li>
+                    <li>Proceso paso a paso</li>
+                </ul>
+                <a href="ia.html" class="guide-button">Comenzar con IA</a>
+            </div>
+
+            <div class="guide-card">
+                <div class="guide-icon">🎨</div>
+                <h2>Diseño en Photopea</h2>
+                <p>Aprende a diseñar logos profesionales usando Photopea, el editor gratuito similar a Photoshop.</p>
+                <ul class="features">
+                    <li>Tutorial completo de Photopea</li>
+                    <li>Técnicas de diseño profesional</li>
+                    <li>Herramientas y efectos</li>
+                    <li>Control total sobre el diseño</li>
+                    <li>Exportación optimizada</li>
+                </ul>
+                <a href="photopea.html" class="guide-button">Comenzar con Photopea</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>💡 Puedes usar ambos métodos para obtener los mejores resultados</p>
+        </div>
+    </div>
+</body>
+</html>
