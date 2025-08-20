@@ -1,881 +1,514 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guía IA - Crear Logo de Equipo</title>
-    <meta name="description" content="Guía completa para crear prompts de IA y generar tu logo de equipo. Incluye generador automático de prompts.">
-    
-    <!-- Open Graph -->
-    <meta property="og:title" content="Guía IA para Crear tu Logo de Equipo">
-    <meta property="og:description" content="Herramientas interactivas para generar prompts de IA para logos">
-    <meta property="og:type" content="website">
-    
-    <!-- Favicon SVG -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23157f1f'><path d='M9.5 2A1.5 1.5 0 008 3.5v1A1.5 1.5 0 009.5 6h1A1.5 1.5 0 0012 4.5v-1A1.5 1.5 0 0010.5 2h-1z'/></svg>">
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Spline+Sans%3Awght%40400%3B500%3B700"
+    />
 
-    <style>
-        /* Same color palette as photopea.html for consistency */
-        :root {
-            --bg-primary: #1d263b;
-            --bg-secondary: #5c6784;
-            --bg-card: #ffffff;
-            --text-primary: #1d263b;
-            --text-secondary: #157f1f;
-            --text-muted: #5c6784;
-            --border: #a0eade;
-            --accent: #4cb963;
-            --accent-hover: #157f1f;
-            --accent-light: #a0eade;
-            --success: #4cb963;
-            --shadow: 0 4px 6px -1px rgb(21 127 31 / 0.1), 0 2px 4px -2px rgb(21 127 31 / 0.1);
-            --shadow-lg: 0 20px 25px -5px rgb(21 127 31 / 0.1), 0 8px 10px -6px rgb(21 127 31 / 0.1);
-            --gradient-primary: linear-gradient(135deg, #4cb963 0%, #a0eade 100%);
-            --gradient-accent: linear-gradient(135deg, #a0eade 0%, #5c6784 100%);
-        }
+    <title>Guía IA</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
 
-        [data-theme="dark"] {
-            --bg-primary: #0f1419;
-            --bg-secondary: #1d263b;
-            --bg-card: #1d263b;
-            --text-primary: #a0eade;
-            --text-secondary: #4cb963;
-            --text-muted: #5c6784;
-            --border: #5c6784;
-            --accent: #4cb963;
-            --accent-hover: #157f1f;
-            --accent-light: #a0eade;
-            --success: #4cb963;
-            --gradient-primary: linear-gradient(135deg, #4cb963 0%, #a0eade 100%);
-            --gradient-accent: linear-gradient(135deg, #a0eade 0%, #5c6784 100%);
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            color: var(--text-primary);
-            background: var(--bg-primary);
-            transition: all 0.3s ease;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-
-        header {
-            background: var(--gradient-primary);
-            padding: 2rem 0;
-            box-shadow: var(--shadow);
-            position: relative;
-            overflow: hidden;
-        }
-
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
-            animation: pulse 3s infinite;
-        }
-
-        .header-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .header-text h1 {
-            margin: 0;
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: white;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .header-text p {
-            margin: 0.5rem 0 0 0;
-            font-size: 1.2rem;
-            color: rgba(255,255,255,0.9);
-        }
-
-        .theme-toggle {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(255,255,255,0.2);
-            border: 1px solid rgba(255,255,255,0.3);
-            color: white;
-            padding: 0.75rem 1rem;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .theme-toggle:hover {
-            background: rgba(255,255,255,0.3);
-            transform: translateY(-2px);
-        }
-
-        .progress-section {
-            background: rgba(255,255,255,0.1);
-            padding: 1rem;
-            border-radius: 0.75rem;
-            backdrop-filter: blur(10px);
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 4px;
-            overflow: hidden;
-            margin-bottom: 0.5rem;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #4cb963, #a0eade);
-            border-radius: 4px;
-            transition: width 0.5s ease;
-            width: 0%;
-        }
-
-        .progress-text {
-            color: white;
-            font-weight: 600;
-            text-align: center;
-        }
-
-        .card {
-            background: var(--bg-card);
-            border-radius: 1rem;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-            transition: all 0.3s ease;
-            animation: fadeInUp 0.6s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .step-card {
-            position: relative;
-            padding-left: 4rem;
-        }
-
-        .step-number {
-            position: absolute;
-            left: 1rem;
-            top: 1.5rem;
-            width: 2.5rem;
-            height: 2.5rem;
-            background: var(--gradient-primary);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.2rem;
-            box-shadow: var(--shadow);
-        }
-
-        .step-title {
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-            font-weight: 700;
-        }
-
-        .checklist {
-            list-style: none;
-            padding: 0;
-        }
-
-        .checklist-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
-            padding: 0.75rem;
-            border-radius: 0.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .checklist-item:hover {
-            background: var(--accent-light);
-            background-opacity: 0.1;
-        }
-
-        .checklist-item.completed {
-            background: var(--accent-light);
-            background-opacity: 0.2;
-        }
-
-        .checklist-item input[type="checkbox"] {
-            width: 1.25rem;
-            height: 1.25rem;
-            accent-color: var(--accent);
-            margin-top: 0.125rem;
-        }
-
-        .checklist-item label {
-            flex: 1;
-            cursor: pointer;
-            font-weight: 500;
-        }
-
-        /* Enhanced code block styling for prompts */
-        .code-block {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            margin: 1rem 0;
-            position: relative;
-        }
-
-        .code-block div:first-child {
-            color: var(--text-secondary);
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .code-block div:last-child {
-            color: var(--text-primary);
-            font-style: italic;
-            line-height: 1.7;
-        }
-
-        /* Form styling improvements */
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-        }
-
-        .form-input, .form-select, .form-textarea {
-            width: 100%;
-            padding: 0.75rem;
-            border: 2px solid var(--border);
-            border-radius: 0.5rem;
-            background: var(--bg-card);
-            color: var(--text-primary);
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-input:focus, .form-select:focus, .form-textarea:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(76, 185, 99, 0.1);
-        }
-
-        .form-textarea {
-            min-height: 120px;
-            resize: vertical;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-            font-size: 1rem;
-        }
-
-        .btn-primary {
-            background: var(--gradient-primary);
-            color: white;
-            box-shadow: var(--shadow);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .btn-secondary {
-            background: var(--bg-secondary);
-            color: white;
-            border: 1px solid var(--border);
-        }
-
-        .btn-secondary:hover {
-            background: var(--accent-hover);
-            transform: translateY(-1px);
-        }
-
-        .copy-btn {
-            font-size: 0.875rem;
-            padding: 0.5rem 1rem;
-        }
-
-        .icon {
-            width: 1.25rem;
-            height: 1.25rem;
-            fill: currentColor;
-            stroke: currentColor;
-            stroke-width: 2;
-        }
-
-        .success-message {
-            display: none;
-            align-items: center;
-            gap: 0.5rem;
-            background: var(--success);
-            color: white;
-            padding: 0.75rem 1rem;
-            border-radius: 0.5rem;
-            margin-top: 1rem;
-            animation: fadeInUp 0.3s ease;
-        }
-
-        .success-message.show {
-            display: flex;
-        }
-
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .header-text h1 {
-                font-size: 2rem;
-            }
-            
-            .step-card {
-                padding-left: 1rem;
-            }
-            
-            .step-number {
-                position: relative;
-                left: 0;
-                top: 0;
-                margin-bottom: 1rem;
-            }
-        }
-
-        /* Print styles */
-        @media print {
-            body {
-                background: white;
-                color: black;
-            }
-            
-            .theme-toggle {
-                display: none;
-            }
-            
-            .card {
-                break-inside: avoid;
-                box-shadow: none;
-                border: 1px solid #ccc;
-            }
-        }
-
-        /* Accessibility */
-        .keyboard-navigation *:focus {
-            outline: 2px solid var(--accent);
-            outline-offset: 2px;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
-    </style>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-</head>
-<body>
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="header-top">
-                    <div class="header-text">
-                        <h1>Guía IA</h1>
-                        <p>Creá prompts perfectos para generar tu logo</p>
-                    </div>
-                    <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
-                        </svg>
-                        <span id="themeText">Modo oscuro</span>
-                    </button>
-                </div>
-                
-                <div class="progress-section">
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progressFill"></div>
-                    </div>
-                    <div class="progress-text" id="progressText">Progreso: 0%</div>
-                </div>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  </head>
+  <body>
+    <div
+      class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden"
+      style="
+        --checkbox-tick-svg: url('data:image/svg+xml,%3csvg viewBox=%270 0 16 16%27 fill=%27rgb(255,255,255)%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3cpath d=%27M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z%27/%3e%3c/svg%3e');
+        font-family: 'Spline Sans', 'Noto Sans', sans-serif;
+      "
+    >
+      <div class="layout-container flex h-full grow flex-col">
+        <div class="px-40 flex flex-1 justify-center py-5">
+          <div
+            class="layout-content-container flex flex-col max-w-[960px] flex-1"
+          >
+            <div class="flex flex-wrap justify-between gap-3 p-4 items-center">
+              <button
+                onclick="window.location.href='index.html'"
+                class="flex items-center gap-2 px-3 py-1 rounded-lg bg-[#f0f2f5] text-[#111418] text-sm font-medium hover:bg-[#e0e3e8] transition"
+              >
+                ← Volver
+              </button>
+              <p
+                class="text-[#111418] tracking-light text-[32px] font-bold leading-tight min-w-72"
+              >
+                Crea el logo de tu equipo
+              </p>
             </div>
-        </div>
-    </header>
-
-    <main>
-        <div class="container">
-            <div class="card">
-                <h2>GUÍA PARA CREAR UN PROMPT PARA ARMAR UN LOGO CON IA</h2>
-                <p>Cuando le pedimos a una IA que diseñe un logo, es importante saber qué queremos transmitir antes de escribir el prompt. El logo es la cara del equipo: refleja identidad, estilo y energía.</p>
+            <!-- script checklist se mueve al final del body -->
+            <p
+              class="text-[#111418] text-base font-normal leading-normal pb-3 pt-1 px-4"
+            >
+              Para crear un logo para tu equipo, seguí estos pasos para generar
+              un prompt efectivo para la IA. Un prompt bien definido asegura que
+              el logo refleje la identidad y el espíritu de tu equipo.
+            </p>
+            <div class="px-4 pb-2">
+              <h3
+                class="text-[#111418] text-lg font-bold leading-tight tracking-[-0.015em] pt-4 pb-1"
+              >
+                ¿Qué es un prompt?
+              </h3>
+              <p class="text-[#111418] text-base font-normal leading-normal">
+                Un <b>prompt</b> es una instrucción o mensaje que le damos a la
+                inteligencia artificial para que entienda qué queremos que cree.
+                Cuanto más claros y detallados seamos, mejores serán los
+                resultados. Para un logo, conviene decir quiénes son, qué
+                quieren mostrar, cómo debería verse (estilo, colores, símbolos)
+                y qué texto debe llevar.
+              </p>
             </div>
+            <h3
+              class="text-[#111418] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4"
+            >
+              Checklist para definir tu logo
+            </h3>
+            <p
+              class="text-[#111418] text-base font-normal leading-normal px-4"
+            >
+              Asegurate de tener en cuenta estos puntos antes de generar el prompt. Cuando los clickees, se marcarán como completados y podrás avanzar para crear el prompt utilizando un generador de prompts automático.
+            </p>
 
-            <div class="card step-card">
-                <div class="step-number">1</div>
-                <h3 class="step-title">Pensá en la identidad del grupo</h3>
-                <ul class="checklist">
-                    <li class="checklist-item">
-                        <input type="checkbox" id="ai-1" data-step="ai">
-                        <label for="ai-1">Nombre del equipo</label>
-                    </li>
-                    <li class="checklist-item">
-                        <input type="checkbox" id="ai-2" data-step="ai">
-                        <label for="ai-2">Personalidad: misteriosos, divertidos, competitivos, inteligentes, aventureros…</label>
-                    </li>
-                    <li class="checklist-item">
-                        <input type="checkbox" id="ai-3" data-step="ai">
-                        <label for="ai-3">Temática: detectivesco, tecnológico, antiguo, futurista, fantástico…</label>
-                    </li>
-                    <li class="checklist-item">
-                        <input type="checkbox" id="ai-4" data-step="ai">
-                        <label for="ai-4">Colores: oscuros/misteriosos; brillantes/llamativos; neutros/elegantes…</label>
-                    </li>
-                    <li class="checklist-item">
-                        <input type="checkbox" id="ai-5" data-step="ai">
-                        <label for="ai-5">Símbolos o elementos: lupa, candado, calavera, engranajes, llaves, reloj de arena…</label>
-                    </li>
-                </ul>
-                <p style="margin-top: 1rem; font-style: italic;">👉 Este paso es fundamental: el logo no solo tiene que verse bien, tiene que contar quiénes somos.</p>
+            <div id="checklist-container" class="px-4">
+              <label class="flex gap-x-3 py-3 flex-row">
+                <input
+                  type="checkbox"
+                  class="h-5 w-5 rounded border-[#dbe0e6] border-2 bg-transparent text-[#3d99f5] checked:bg-[#3d99f5] checked:border-[#3d99f5] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#dbe0e6] focus:outline-none"
+                />
+                <p class="text-[#111418] text-base font-normal leading-normal">
+                  ¿Ya pensaste el <b>nombre del equipo</b>?
+                </p>
+              </label>
+              <label class="flex gap-x-3 py-3 flex-row">
+                <input
+                  type="checkbox"
+                  class="h-5 w-5 rounded border-[#dbe0e6] border-2 bg-transparent text-[#3d99f5] checked:bg-[#3d99f5] checked:border-[#3d99f5] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#dbe0e6] focus:outline-none"
+                />
+                <p class="text-[#111418] text-base font-normal leading-normal">
+                  ¿Sabés qué <b>personalidad</b> o <b>valores</b> querés
+                  transmitir?
+                </p>
+              </label>
+              <label class="flex gap-x-3 py-3 flex-row">
+                <input
+                  type="checkbox"
+                  class="h-5 w-5 rounded border-[#dbe0e6] border-2 bg-transparent text-[#3d99f5] checked:bg-[#3d99f5] checked:border-[#3d99f5] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#dbe0e6] focus:outline-none"
+                />
+                <p class="text-[#111418] text-base font-normal leading-normal">
+                  ¿Definiste la <b>temática</b> o <b>estilo</b> del logo?
+                </p>
+              </label>
+              <label class="flex gap-x-3 py-3 flex-row">
+                <input
+                  type="checkbox"
+                  class="h-5 w-5 rounded border-[#dbe0e6] border-2 bg-transparent text-[#3d99f5] checked:bg-[#3d99f5] checked:border-[#3d99f5] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#dbe0e6] focus:outline-none"
+                />
+                <p class="text-[#111418] text-base font-normal leading-normal">
+                  ¿Elegiste los <b>colores</b>?
+                </p>
+              </label>
+              <label class="flex gap-x-3 py-3 flex-row">
+                <input
+                  type="checkbox"
+                  class="h-5 w-5 rounded border-[#dbe0e6] border-2 bg-transparent text-[#3d99f5] checked:bg-[#3d99f5] checked:border-[#3d99f5] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#dbe0e6] focus:outline-none"
+                />
+                <p class="text-[#111418] text-base font-normal leading-normal">
+                  ¿Tenés <b>símbolos</b> o <b>elementos clave</b> para incluir?
+                </p>
+              </label>
+              <label class="flex gap-x-3 py-3 flex-row">
+                <input
+                  type="checkbox"
+                  class="h-5 w-5 rounded border-[#dbe0e6] border-2 bg-transparent text-[#3d99f5] checked:bg-[#3d99f5] checked:border-[#3d99f5] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#dbe0e6] focus:outline-none"
+                />
+                <p class="text-[#111418] text-base font-normal leading-normal">
+                  ¿Querés que aparezca el <b>nombre o iniciales</b> en el logo?
+                </p>
+              </label>
             </div>
-
-            <div class="card step-card">
-                <div class="step-number">2</div>
-                <h3 class="step-title">Armá el prompt paso a paso (estructura)</h3>
-                <div class="code-block">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                        <strong>Estructura del prompt:</strong>
-                        <button class="btn btn-secondary copy-btn" onclick="copyToClipboard('promptStructure')">
-                            <svg class="icon" viewBox="0 0 24 24">
-                                <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-                            </svg>
-                            Copiar
-                        </button>
-                    </div>
-                    <div id="promptStructure">"Un logo para [nombre del equipo], que transmita [personalidad/estilo]. El diseño debe incluir [elementos o símbolos], con una paleta de colores [colores]. Estilo [realista, minimalista, vintage, futurista, caricaturesco]. Debe ser claro y reconocible, como un logo profesional."</div>
-                </div>
-            </div>
-
-            <div class="card step-card">
-                <div class="step-number">3</div>
-                <h3 class="step-title">Ejemplos de prompts</h3>
-                
-                <div style="margin-bottom: 1.5rem;">
-                    <h4 style="margin-bottom: 0.5rem;">Ejemplo 1:</h4>
-                    <div class="code-block">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                            <strong>Los Enigmas</strong>
-                            <button class="btn btn-secondary copy-btn" onclick="copyToClipboard('example1')">
-                                <svg class="icon" viewBox="0 0 24 24">
-                                    <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-                                </svg>
-                                Copiar
-                            </button>
-                        </div>
-                        <div id="example1">"Un logo para el equipo Los Enigmas, con un estilo misterioso y detectivesco. Debe incluir una lupa y un candado, usando colores oscuros como negro y azul. Estilo minimalista, como un logo moderno."</div>
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 1.5rem;">
-                    <h4 style="margin-bottom: 0.5rem;">Ejemplo 2:</h4>
-                    <div class="code-block">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                            <strong>Llave Maestra</strong>
-                            <button class="btn btn-secondary copy-btn" onclick="copyToClipboard('example2')">
-                                <svg class="icon" viewBox="0 0 24 24">
-                                    <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-                                </svg>
-                                Copiar
-                            </button>
-                        </div>
-                        <div id="example2">"Un logo para el grupo Llave Maestra, divertido y colorido. Incluir una gran llave dorada y engranajes, en un estilo caricaturesco."</div>
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 1.5rem;">
-                    <h4 style="margin-bottom: 0.5rem;">Ejemplo 3:</h4>
-                    <div class="code-block">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                            <strong>Cronos</strong>
-                            <button class="btn btn-secondary copy-btn" onclick="copyToClipboard('example3')">
-                                <svg class="icon" viewBox="0 0 24 24">
-                                    <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-                                </svg>
-                                Copiar
-                            </button>
-                        </div>
-                        <div id="example3">"Un logo para Cronos, con un estilo elegante y futurista. Queremos un reloj de arena metálico, en tonos plateados y morados."</div>
-                    </div>
-                </div>
-
-                <ul class="checklist">
-                    <li class="checklist-item">
-                        <input type="checkbox" id="ai-6" data-step="ai">
-                        <label for="ai-6">Revisé los ejemplos de prompts</label>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="card step-card">
-                <div class="step-number">4</div>
-                <h3 class="step-title">Ajustá y probá</h3>
-                <ul class="checklist">
-                    <li class="checklist-item">
-                        <input type="checkbox" id="ai-7" data-step="ai">
-                        <label for="ai-7">Agregá detalles (colores, estilo gráfico)</label>
-                    </li>
-                    <li class="checklist-item">
-                        <input type="checkbox" id="ai-8" data-step="ai">
-                        <label for="ai-8">Quitá lo que no te guste</label>
-                    </li>
-                    <li class="checklist-item">
-                        <input type="checkbox" id="ai-9" data-step="ai">
-                        <label for="ai-9">Inspirate en logos reales</label>
-                    </li>
-                </ul>
-                <p style="margin-top: 1rem; font-style: italic;">👉 Consejo final: No piensen solo en lo que se ve; piensen en lo que quieren transmitir.</p>
-            </div>
-
-            <!-- Prompt Generator -->
-            <div class="card">
-                <h3>🤖 Generá tu prompt personalizado</h3>
-                <p style="margin-bottom: 1.5rem;">Completá los campos y generaremos tu prompt automáticamente:</p>
-                
-                <form id="promptGenerator">
-                    <div class="form-group">
-                        <label for="teamName" class="form-label">Nombre del equipo *</label>
-                        <input type="text" id="teamName" class="form-input" placeholder="Ej: Los Enigmas" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="personality" class="form-label">Personalidad del equipo *</label>
-                        <select id="personality" class="form-select" required>
-                            <option value="">Seleccionar...</option>
-                            <option value="misterioso y detectivesco">Misterioso y detectivesco</option>
-                            <option value="divertido y colorido">Divertido y colorido</option>
-                            <option value="competitivo y agresivo">Competitivo y agresivo</option>
-                            <option value="inteligente y tecnológico">Inteligente y tecnológico</option>
-                            <option value="aventurero y audaz">Aventurero y audaz</option>
-                            <option value="elegante y sofisticado">Elegante y sofisticado</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="symbols" class="form-label">Símbolos o elementos *</label>
-                        <input type="text" id="symbols" class="form-input" placeholder="Ej: una lupa y un candado" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="colors" class="form-label">Colores *</label>
-                        <input type="text" id="colors" class="form-input" placeholder="Ej: negro y azul" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="style" class="form-label">Estilo visual *</label>
-                        <select id="style" class="form-select" required>
-                            <option value="">Seleccionar...</option>
-                            <option value="minimalista">Minimalista</option>
-                            <option value="realista">Realista</option>
-                            <option value="caricaturesco">Caricaturesco</option>
-                            <option value="vintage">Vintage</option>
-                            <option value="futurista">Futurista</option>
-                            <option value="geométrico">Geométrico</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="includeText" class="form-label">Texto a incluir (opcional)</label>
-                        <input type="text" id="includeText" class="form-input" placeholder="Ej: nombre del equipo o iniciales">
-                    </div>
-
-                    <button type="button" class="btn btn-primary" onclick="generatePrompt()">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
-                        Generar prompt
-                    </button>
-                </form>
-
-                <div id="generatedPrompt" style="display: none; margin-top: 1.5rem;">
-                    <h4>Tu prompt generado:</h4>
-                    <div class="code-block">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                            <strong>Prompt listo para usar:</strong>
-                            <button class="btn btn-secondary copy-btn" onclick="copyGeneratedPrompt()">
-                                <svg class="icon" viewBox="0 0 24 24">
-                                    <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-                                </svg>
-                                Copiar prompt
-                            </button>
-                        </div>
-                        <textarea id="promptOutput" class="form-textarea" readonly></textarea>
-                    </div>
-                    <div class="success-message" id="promptCopied">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <path d="M20 6L9 17l-5-5"/>
-                        </svg>
-                        ¡Prompt copiado al portapapeles! ✅
-                    </div>
-                </div>
-
-                <ul class="checklist" style="margin-top: 1.5rem;">
-                    <li class="checklist-item">
-                        <input type="checkbox" id="ai-10" data-step="ai">
-                        <label for="ai-10">Generé mi prompt personalizado</label>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Navigation -->
-            <div class="card" style="text-align: center;">
-                <h3>¿Preferís diseñar manualmente?</h3>
-                <p>Si querés crear tu logo paso a paso usando Photopea, probá nuestra guía de diseño:</p>
-                <a href="photopea.html" class="btn btn-primary">
-                    <svg class="icon" viewBox="0 0 24 24">
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                    </svg>
-                    Ir a guía Photopea
-                </a>
-            </div>
-
-            <!-- Export Section -->
-            <div class="card">
-                <h3>📄 Exportar guía</h3>
-                <p>Descargá esta guía como PDF para tenerla siempre disponible:</p>
-                <button class="btn btn-primary" onclick="window.print()">
-                    <svg class="icon" viewBox="0 0 24 24">
-                        <path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/>
-                    </svg>
-                    Descargar guía PDF
+            <div class="accordion px-4 mb-2">
+              <div class="border-b">
+                <button
+                  type="button"
+                  class="w-full text-left py-3 font-bold text-base text-[#111418] flex justify-between items-center accordion-toggle"
+                >
+                  Ejemplos de prompts <span class="text-xl">+</span>
                 </button>
+                <div class="accordion-content hidden">
+                  <div class="flex flex-col gap-2">
+                    <div class="bg-white rounded-xl p-3 shadow-sm">
+                      <p
+                        class="text-[#111418] text-base font-medium leading-normal"
+                      >
+                        “Un logo para el equipo Los Enigmas, con un estilo
+                        misterioso y detectivesco. Debe incluir una lupa y un
+                        candado, usando colores oscuros como negro y azul.
+                        Estilo minimalista, como un logo moderno.”
+                      </p>
+                    </div>
+                    <div class="bg-white rounded-xl p-3 shadow-sm">
+                      <p
+                        class="text-[#111418] text-base font-medium leading-normal"
+                      >
+                        “Un logo para el grupo Llave Maestra, divertido y
+                        colorido. Incluir una gran llave dorada y engranajes, en
+                        un estilo caricaturesco.”
+                      </p>
+                    </div>
+                    <div class="bg-white rounded-xl p-3 shadow-sm">
+                      <p
+                        class="text-[#111418] text-base font-medium leading-normal"
+                      >
+                        “Un logo para Cronos, nuestro equipo, con un estilo
+                        elegante y futurista. Queremos un reloj de arena
+                        metálico, en tonos plateados y morados.”
+                      </p>
+                    </div>
+                    <div class="bg-white rounded-xl p-3 shadow-sm">
+                      <p
+                        class="text-[#111418] text-base font-medium leading-normal"
+                      >
+                        “Crea un logo deportivo para un equipo llamado Los
+                        Tigres Azules. El logo debe incluir la figura de un
+                        tigre rugiendo, usar los colores azul y blanco, y tener
+                        un diseño que transmita fuerza y energía. Incluye el
+                        texto Tigres en el logo.”
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-        </div>
-    </main>
+            <script>
+              // Acordeón simple para los ejemplos de prompts
+              document.querySelectorAll(".accordion-toggle").forEach((btn) => {
+                btn.addEventListener("click", function () {
+                  const content =
+                    this.parentElement.querySelector(".accordion-content");
+                  const expanded = !content.classList.contains("hidden");
+                  document
+                    .querySelectorAll(".accordion-content")
+                    .forEach((c) => c.classList.add("hidden"));
+                  document
+                    .querySelectorAll(".accordion-toggle span")
+                    .forEach((s) => (s.textContent = "+"));
+                  if (!expanded) {
+                    content.classList.remove("hidden");
+                    this.querySelector("span").textContent = "–";
+                  }
+                });
+              });
+            </script>
+            <!-- Título del generador oculto junto con el generador -->
+            <div id="generador-container" style="display: none">
+              <h3
+                class="text-[#111418] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4"
+              >
+                Generador de prompt automático
+              </h3>
+              <div class="px-4 pb-2">
+                <button id="btn-ideas-ia" type="button" class="mb-2 px-3 py-1 rounded-lg bg-[#e6f0fd] text-[#2563eb] text-sm font-medium hover:bg-[#d0e6fa] transition">¿Sin ideas? Pedir sugerencias</button>
+                <div id="sugerencias-ia" class="hidden bg-[#f8fafc] border border-[#b3c7e6] rounded-xl p-3 mt-2">
+                  <p class="text-[#111418] text-base font-semibold mb-1">Ideas base sugeridas:</p>
+                  <ul id="lista-ideas-ia" class="list-disc pl-5 text-[#3d99f5] text-sm"></ul>
+                </div>
+              </div>
+              <div
+                class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3"
+              >
+                <label class="flex flex-col min-w-40 flex-1">
+                  <p
+                    class="text-[#111418] text-base font-medium leading-normal pb-2"
+                  >
+                    Nombre del equipo
+                  </p>
+                  <input
+                    placeholder="Ej: Los Enigmas, Llave Maestra..."
+                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111418] focus:outline-0 focus:ring-0 border border-[#dbe0e6] bg-white focus:border-[#dbe0e6] h-14 placeholder:text-[#60758a] p-[15px] text-base font-normal leading-normal"
+                    id="nombre-equipo"
+                  />
+                </label>
+              </div>
+              <div
+                class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3"
+              >
+                <label class="flex flex-col min-w-40 flex-1">
+                  <p
+                    class="text-[#111418] text-base font-medium leading-normal pb-2"
+                  >
+                    Personalidad / Valores
+                  </p>
+                  <input
+                    placeholder="Ej: misterioso, divertido, competitivo, inteligente..."
+                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111418] focus:outline-0 focus:ring-0 border border-[#dbe0e6] bg-white focus:border-[#dbe0e6] h-14 placeholder:text-[#60758a] p-[15px] text-base font-normal leading-normal"
+                    id="personalidad-equipo"
+                  />
+                </label>
+              </div>
+              <div
+                class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3"
+              >
+                <label class="flex flex-col min-w-40 flex-1">
+                  <p
+                    class="text-[#111418] text-base font-medium leading-normal pb-2"
+                  >
+                    Temática / Estilo
+                  </p>
+                  <input
+                    placeholder="Ej: detectivesco, tecnológico, antiguo, futurista, vintage, minimalista..."
+                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111418] focus:outline-0 focus:ring-0 border border-[#dbe0e6] bg-white focus:border-[#dbe0e6] h-14 placeholder:text-[#60758a] p-[15px] text-base font-normal leading-normal"
+                    id="tematica-equipo"
+                  />
+                </label>
+              </div>
+              <div
+                class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3"
+              >
+                <label class="flex flex-col min-w-40 flex-1">
+                  <p
+                    class="text-[#111418] text-base font-medium leading-normal pb-2"
+                  >
+                    Colores
+                  </p>
+                  <input
+                    placeholder="Ej: azul, negro, dorado, vibrantes, neutros..."
+                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111418] focus:outline-0 focus:ring-0 border border-[#dbe0e6] bg-white focus:border-[#dbe0e6] h-14 placeholder:text-[#60758a] p-[15px] text-base font-normal leading-normal"
+                    id="colores-equipo"
+                  />
+                </label>
+              </div>
+              <div
+                class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3"
+              >
+                <label class="flex flex-col min-w-40 flex-1">
+                  <p
+                    class="text-[#111418] text-base font-medium leading-normal pb-2"
+                  >
+                    Símbolos o elementos clave
+                  </p>
+                  <input
+                    placeholder="Ej: lupa, candado, calavera, engranajes, llaves..."
+                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111418] focus:outline-0 focus:ring-0 border border-[#dbe0e6] bg-white focus:border-[#dbe0e6] h-14 placeholder:text-[#60758a] p-[15px] text-base font-normal leading-normal"
+                    id="simbolos-equipo"
+                  />
+                </label>
+              </div>
+              <div
+                class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3"
+              >
+                <label class="flex flex-col min-w-40 flex-1">
+                  <p
+                    class="text-[#111418] text-base font-medium leading-normal pb-2"
+                  >
+                    Texto a incluir
+                  </p>
+                  <input
+                    placeholder="Ej: nombre o iniciales del equipo"
+                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111418] focus:outline-0 focus:ring-0 border border-[#dbe0e6] bg-white focus:border-[#dbe0e6] h-14 placeholder:text-[#60758a] p-[15px] text-base font-normal leading-normal"
+                    id="texto-equipo"
+                  />
+                </label>
+              </div>
+              <div
+                class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3"
+              >
+                <label class="flex flex-col min-w-40 flex-1">
+                  <p
+                    class="text-[#111418] text-base font-medium leading-normal pb-2"
+                  >
+                    Valores o ideas a transmitir
+                  </p>
+                  <input
+                    placeholder="Ej: fuerza, energía, creatividad, trabajo en equipo..."
+                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111418] focus:outline-0 focus:ring-0 border border-[#dbe0e6] bg-white focus:border-[#dbe0e6] h-14 placeholder:text-[#60758a] p-[15px] text-base font-normal leading-normal"
+                    id="valores-equipo"
+                  />
+                </label>
+              </div>
+              <div class="flex px-4 py-3 justify-end">
+                <button
+                  class="flex min-w-[84px] max-w-[480px] items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#3d99f5] text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-[#2563eb] focus:bg-[#2563eb]"
+                  id="generar-prompt-btn"
+                >
+                  <span class="truncate">Generar Prompt</span>
+                </button>
+              </div>
+              <div
+                class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3"
+              >
+                <label class="flex flex-col min-w-40 flex-1">
+                  <p
+                    class="text-[#111418] text-base font-medium leading-normal pb-2"
+                  >
+                    Prompt generado
+                  </p>
+                  <textarea
+                    placeholder="El prompt generado aparecerá aquí"
+                    class="form-input flex w-full min-w-0 flex-1 resize-y overflow-auto rounded-xl text-[#111418] focus:outline-0 focus:ring-0 border border-[#dbe0e6] bg-white focus:border-[#dbe0e6] min-h-36 placeholder:text-[#60758a] p-[15px] text-base font-normal leading-normal"
+                  ></textarea>
+                </label>
+              </div>
+              <div class="flex justify-stretch">
+                <div class="flex flex-1 gap-3 flex-wrap px-4 py-3 justify-end">
+                  <button
+                    class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#f0f2f5] text-[#111418] text-sm font-bold leading-normal tracking-[0.015em]"
+                    id="copiar-prompt-btn"
+                  >
+                    <span class="truncate">Copiar Prompt</span>
+                  </button>
+                </div>
+              </div>
+              <script>
+                // Obtener referencias a los nuevos inputs
+                const nombreInput = document.getElementById("nombre-equipo");
+                const personalidadInput = document.getElementById(
+                  "personalidad-equipo"
+                );
+                const tematicaInput =
+                  document.getElementById("tematica-equipo");
+                const coloresInput = document.getElementById("colores-equipo");
+                const simbolosInput =
+                  document.getElementById("simbolos-equipo");
+                const textoInput = document.getElementById("texto-equipo");
+                const valoresInput = document.getElementById("valores-equipo");
+                const promptTextarea = document.querySelector("textarea");
 
-    <footer style="background: var(--bg-secondary); padding: 2rem 0; margin-top: 3rem; border-top: 1px solid var(--border);">
-        <div class="container">
-            <div style="text-align: center; color: var(--text-muted);">
-                <p>Guía interactiva para equipos de escape room • Uso educativo</p>
+                // Generar Prompt
+                document.getElementById("generar-prompt-btn").onclick =
+                  function () {
+                    const nombre = nombreInput.value.trim();
+                    const personalidad = personalidadInput.value.trim();
+                    const tematica = tematicaInput.value.trim();
+                    const colores = coloresInput.value.trim();
+                    const simbolos = simbolosInput.value.trim();
+                    const texto = textoInput.value.trim();
+                    const valores = valoresInput.value.trim();
+
+                    if (!nombre) {
+                      promptTextarea.value =
+                        "Por favor completá el nombre del equipo.";
+                      return;
+                    }
+
+                    let prompt = `Crea un logo`;
+                    if (tematica) prompt += ` ${tematica}`;
+                    prompt += ` para un equipo llamado ${nombre}.`;
+                    if (simbolos)
+                      prompt += ` El logo debe incluir ${simbolos}.`;
+                    if (colores) prompt += ` Usar los colores ${colores}.`;
+                    if (personalidad || valores) {
+                      prompt += ` El diseño debe transmitir`;
+                      if (personalidad) prompt += ` ${personalidad}`;
+                      if (personalidad && valores) prompt += " y";
+                      if (valores) prompt += ` ${valores}`;
+                      prompt += ".";
+                    }
+                    if (texto)
+                      prompt += ` Incluye el texto ${texto} en el logo.`;
+                    prompt += ` Debe ser claro y reconocible, como un logo profesional.`;
+
+                    promptTextarea.value = prompt;
+                  };
+
+                // Copiar Prompt
+                document.getElementById("copiar-prompt-btn").onclick =
+                  function () {
+                    if (promptTextarea.value) {
+                      promptTextarea.select();
+                      document.execCommand("copy");
+                      alert("Prompt copiado al portapapeles.");
+                    }
+                  };
+              </script>
             </div>
+          </div>
         </div>
-    </footer>
-
+      </div>
+    </div>
     <script>
-        
-        // Theme management
-        const themeToggle = document.getElementById('themeToggle');
-        const themeText = document.getElementById('themeText');
-        const html = document.documentElement;
+      // Script único para checklist y visibilidad del generador
+      document.addEventListener("DOMContentLoaded", function () {
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const generadorContainer = document.getElementById("generador-container");
+        const checklistContainer = document.getElementById("checklist-container");
 
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        html.setAttribute('data-theme', savedTheme);
-        updateThemeText(savedTheme);
+        function updateGeneradorVisible() {
+          const allChecked = Array.from(checkboxes).every((checkbox) => checkbox.checked);
+          generadorContainer.style.display = allChecked ? "" : "none";
+          checklistContainer.style.display = allChecked ? "none" : "";
+        }
 
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = html.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            html.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            updateThemeText(newTheme);
+        checkboxes.forEach((checkbox) => {
+          const text = checkbox.parentElement.querySelector("p");
+          checkbox.addEventListener("change", function () {
+            if (checkbox.checked) {
+              text.style.textDecoration = "line-through";
+              text.style.opacity = "0.6";
+            } else {
+              text.style.textDecoration = "";
+              text.style.opacity = "";
+            }
+            updateGeneradorVisible();
+          });
         });
 
-        function updateThemeText(theme) {
-            themeText.textContent = theme === 'dark' ? 'Modo claro' : 'Modo oscuro';
-        }
-
-        // Checklist management
-        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-            const saved = localStorage.getItem(checkbox.id);
-            if (saved === 'true') {
-                checkbox.checked = true;
-                checkbox.parentElement.classList.add('completed');
-            }
-
-            checkbox.addEventListener('change', () => {
-                localStorage.setItem(checkbox.id, checkbox.checked);
-                checkbox.parentElement.classList.toggle('completed', checkbox.checked);
-                updateProgress();
-            });
-        });
-
-        // Progress tracking
-        function updateProgress() {
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            const checkedBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
-            
-            const progress = checkboxes.length > 0 ? (checkedBoxes.length / checkboxes.length) * 100 : 0;
-            
-            document.getElementById('progressFill').style.width = progress + '%';
-            document.getElementById('progressText').textContent = `Progreso: ${Math.round(progress)}%`;
-        }
-
-        // Copy to clipboard functionality
-        async function copyToClipboard(elementId) {
-            const element = document.getElementById(elementId);
-            const text = element.textContent || element.value;
-            
-            try {
-                await navigator.clipboard.writeText(text);
-                showSuccessMessage('Copiado al portapapeles ✅');
-            } catch (err) {
-                const textArea = document.createElement('textarea');
-                textArea.value = text;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                showSuccessMessage('Copiado al portapapeles ✅');
-            }
-        }
-
-        function showSuccessMessage(message) {
-            const successDiv = document.createElement('div');
-            successDiv.className = 'success-message show';
-            successDiv.innerHTML = `
-                <svg class="icon" viewBox="0 0 24 24">
-                    <path d="M20 6L9 17l-5-5"/>
-                </svg>
-                ${message}
-            `;
-            
-            document.body.appendChild(successDiv);
-            successDiv.style.position = 'fixed';
-            successDiv.style.top = '20px';
-            successDiv.style.right = '20px';
-            successDiv.style.zIndex = '1000';
-            
-            setTimeout(() => {
-                successDiv.remove();
-            }, 3000);
-        }
-
-        // Prompt generator
-        function generatePrompt() {
-            const teamName = document.getElementById('teamName').value;
-            const personality = document.getElementById('personality').value;
-            const symbols = document.getElementById('symbols').value;
-            const colors = document.getElementById('colors').value;
-            const style = document.getElementById('style').value;
-            const includeText = document.getElementById('includeText').value;
-
-            if (!teamName || !personality || !symbols || !colors || !style) {
-                alert('Por favor completá todos los campos obligatorios (*)');
-                return;
-            }
-
-            let prompt = `Un logo para el equipo ${teamName}, que transmita ${personality}. El diseño debe incluir ${symbols}, con una paleta de colores ${colors}. Estilo ${style}. Debe ser claro y reconocible, como un logo profesional.`;
-            
-            if (includeText) {
-                prompt += ` Incluye el texto "${includeText}" en el logo.`;
-            }
-
-            document.getElementById('promptOutput').value = prompt;
-            document.getElementById('generatedPrompt').style.display = 'block';
-            
-            document.getElementById('generatedPrompt').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        async function copyGeneratedPrompt() {
-            const prompt = document.getElementById('promptOutput').value;
-            
-            try {
-                await navigator.clipboard.writeText(prompt);
-                const successMessage = document.getElementById('promptCopied');
-                successMessage.classList.add('show');
-                setTimeout(() => {
-                    successMessage.classList.remove('show');
-                }, 3000);
-            } catch (err) {
-                showSuccessMessage('Prompt copiado al portapapeles ✅');
-            }
-        }
-
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Tab') {
-                document.body.classList.add('keyboard-navigation');
-            }
-        });
-
-        document.addEventListener('mousedown', () => {
-            document.body.classList.remove('keyboard-navigation');
-        });
-
-        // Initialize progress on page load
-        updateProgress();
-
-        // Auto-save form data
-        const formInputs = ['teamName', 'personality', 'symbols', 'colors', 'style', 'includeText'];
-        formInputs.forEach(inputId => {
-            const input = document.getElementById(inputId);
-            const saved = localStorage.getItem(`form_${inputId}`);
-            if (saved) {
-                input.value = saved;
-            }
-            
-            input.addEventListener('input', () => {
-                localStorage.setItem(`form_${inputId}`, input.value);
-            });
-        });
+        updateGeneradorVisible();
+      });
     </script>
-</body>
+    <script>
+      // Sugerencias IA aleatorias para el generador de prompts
+      const ideasBase = [
+        [
+          'Logo con temática futurista y colores neón',
+          'Logo minimalista usando solo dos colores',
+          'Logo con un animal como símbolo principal',
+          'Logo con engranajes y elementos mecánicos',
+          'Logo con escudo y letras grandes',
+          'Logo inspirado en videojuegos retro',
+          'Logo con formas geométricas abstractas',
+          'Logo con una llave y un candado',
+          'Logo con relámpagos y energía',
+          'Logo con una lupa y huellas digitales',
+        ],
+        [
+          'Valores: trabajo en equipo, creatividad, innovación',
+          'Valores: fuerza, perseverancia, amistad',
+          'Valores: inteligencia, estrategia, curiosidad',
+          'Valores: diversión, alegría, compañerismo',
+          'Valores: liderazgo, respeto, compromiso',
+        ],
+        [
+          'Estilo: caricaturesco y colorido',
+          'Estilo: elegante y profesional',
+          'Estilo: deportivo y dinámico',
+          'Estilo: misterioso y detectivesco',
+          'Estilo: vintage y clásico',
+        ]
+      ];
+      function getRandomIdeas() {
+        return ideasBase.map(arr => arr[Math.floor(Math.random() * arr.length)]);
+      }
+      document.addEventListener('DOMContentLoaded', function() {
+        const btnIdeasIA = document.getElementById('btn-ideas-ia');
+        const sugerenciasIA = document.getElementById('sugerencias-ia');
+        const listaIdeasIA = document.getElementById('lista-ideas-ia');
+        if (btnIdeasIA && sugerenciasIA && listaIdeasIA) {
+          btnIdeasIA.addEventListener('click', () => {
+            const ideas = getRandomIdeas();
+            listaIdeasIA.innerHTML = '';
+            ideas.forEach(idea => {
+              const li = document.createElement('li');
+              li.textContent = idea;
+              listaIdeasIA.appendChild(li);
+            });
+            sugerenciasIA.classList.remove('hidden');
+          });
+        }
+      });
+    </script>
+  </body>
 </html>
